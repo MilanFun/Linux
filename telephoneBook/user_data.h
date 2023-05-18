@@ -5,4 +5,4 @@ struct user_data
     char surname[16];
     char phone_number[16];
     char email[32];
-}user_data;
+} user_data;

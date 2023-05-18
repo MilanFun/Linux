@@ -39,7 +39,8 @@ static struct file_operations fops = {
 
 void print_array()
 {
-	for (int i = 0; i < count; i++) {
+	for (int i = 0; i < count; i++) 
+	{
 		printk(KERN_INFO "Name: %s\t Surname: %s\t Age: %d\t Email: %s\t Phone: %s\n", 
 			array[i].name, array[i].surname, array[i].age, array[i].email, array[i].phone_number);
 	}
@@ -47,7 +48,8 @@ void print_array()
 
 void remove(int index)
 {
-    for(int i = index; i < count - 1; i++) {
+    for(int i = index; i < count - 1; i++) 
+	{
 		array[i] = array[i + 1];
    	}
 	kfree(&array[count]);
@@ -57,7 +59,8 @@ void remove(int index)
 static int device_open(struct inode *inode, struct file *file)
 {
 
-	if (Device_Open) {
+	if (Device_Open) 
+	{
 		return -EBUSY;
 	}
 
@@ -77,7 +80,6 @@ static int device_release(struct inode *inode, struct file *file)
 
 static ssize_t device_read(struct file *filp, char *buffer,	size_t length, loff_t * offset)
 {
-	
 	print_array();
 	return length;
 }
@@ -85,11 +87,15 @@ static ssize_t device_read(struct file *filp, char *buffer,	size_t length, loff_
 static ssize_t device_write(struct file *filp, const char *buff, size_t len, loff_t * off)
 {	
 	char tmp[len];
-	if (buff) {
+	if (buff) 
+	{
 		printk(KERN_INFO "WRITE: save user.");
-		if (copy_from_user(tmp, buff, len) != 0) {
+		if (copy_from_user(tmp, buff, len) != 0) 
+		{
 			return -EFAULT;
-		} else {
+		} 
+		else 
+		{
 			struct user_data *user = (struct user_data*) ((void*) tmp);
 			printk(KERN_INFO "Name: %s\t Surname: %s\t Age: %d\t Email: %s\t Phone: %s\n", 
 				user->name, user->surname, user->age, user->email, user->phone_number);
@@ -112,8 +118,10 @@ static long device_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 				printk(KERN_ALERT "READ: Panic!\n");
 			}
 			int del = 0;
-			for (int i = 0; i < count; i++) {
-				if (strncmp(array[i].surname, val, 16) == 0) {
+			for (int i = 0; i < count; i++) 
+			{
+				if (strncmp(array[i].surname, val, 16) == 0) 
+				{
 					printk(KERN_INFO "DEL_USER: Found user with surname %s\n", val);
 					remove(i);
 					del++;
@@ -121,7 +129,8 @@ static long device_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 				}
 			}
 			print_array();
-			if (del == 0) {
+			if (del == 0) 
+			{
 				printk(KERN_INFO "DEL_USER: User with surname %s not found\n", val);
 			} 
 			break;
@@ -132,8 +141,10 @@ static long device_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 				printk(KERN_ALERT "GET_USER: Panic!\n");
 			}
 			int found = 0;
-			for (int i = 0; i < count; i++) {
-				if (strncmp(array[i].surname, val, 16) == 0) {
+			for (int i = 0; i < count; i++) 
+			{
+				if (strncmp(array[i].surname, val, 16) == 0) 
+				{
 					printk(KERN_INFO "GET_USER: Found user with surname %s\n", val);
 					if (copy_to_user((char*) arg, &array[i], sizeof(array[i])))
 					{
@@ -146,7 +157,8 @@ static long device_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 					break;
 				}
 			}
-			if (found == 0) {
+			if (found == 0) 
+			{
 				printk(KERN_INFO "GET_USER: User with surname %s not found\n", val);
 			} 
 			break;
@@ -161,7 +173,8 @@ static int __init start_module(void)
 	Major = register_chrdev(0, DEVICE_NAME, &fops);
 	array = kmalloc_array(1024, sizeof(user_data), GFP_KERNEL);
 
-	if (Major < 0) {
+	if (Major < 0) 
+	{
 	  printk(KERN_ALERT "START_MODULE: register char device failed");
 	  return Major;
 	}
