@@ -27,3 +27,15 @@ Check module output
 ```
 dmesg
 ```
+
+## Keyboard interrupt handler
+### Run
+Execute command
+```
+./init.sh
+```
+Check module output
+```
+dmesg
+```
+You should see the counter of pressed keyboard key
