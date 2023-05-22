@@ -39,3 +39,7 @@ Check module output
 dmesg
 ```
 You should see the counter of pressed keyboard key
+
+## Schedule process counter and save to procfs
+### 
+Apply patch for `vmlinuz-6.4.0-rc3-dirty` and check proc folder. You should find something like this - `/proc/<xxx>/schedule_counter` where store counter number of task_struct field
