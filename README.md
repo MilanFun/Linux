@@ -51,11 +51,11 @@ tar xzf linux6.4.0.tar.gz
 Run VM with kernel
 ```
 emu-system-x86_64 -kernel ./build/vmlinuz-6.4.0-rc3-dirty \
-                  -m 512m 
-                  -initrd ./build/initramfs.gz 
-                  -nographic 
-                  -append "console=ttyS0" 
-                  --cpu host 
+                  -m 512m \
+                  -initrd ./build/initramfs.gz \ 
+                  -nographic \
+                  -append "console=ttyS0" \ 
+                  --cpu host \
                   --enable-kvm
 ```
 Check `/proc` space with `/proc/<xxx>/schedule_counter`
