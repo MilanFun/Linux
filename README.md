@@ -43,3 +43,19 @@ You should see the counter of pressed keyboard key
 ## Schedule process counter and save to procfs
 ### 
 Apply patch for `vmlinuz-6.4.0-rc3-dirty` and check proc folder. You should find something like this - `/proc/<xxx>/schedule_counter` where store counter number of task_struct field
+
+Light way
+```
+tar xzf linux6.4.0.tar.gz
+```
+Run VM with kernel
+```
+emu-system-x86_64 -kernel ./build/vmlinuz-6.4.0-rc3-dirty \
+                  -m 512m 
+                  -initrd ./build/initramfs.gz 
+                  -nographic 
+                  -append "console=ttyS0" 
+                  --cpu host 
+                  --enable-kvm
+```
+Check `/proc` space with `/proc/<xxx>/schedule_counter`
